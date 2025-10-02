@@ -9,6 +9,8 @@ class ScheduleSlotResponse(BaseModel):
     holding_marker_id: Optional[int]
     name: Optional[str]
     spending_time: time
+    need_to_reservation: bool
+    is_reserved: bool
     order_num: int
     created_at: datetime
     updated_at: datetime
