@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import date, datetime
-from typing import Optional
+from typing import Optional, List
 
 
 class PlanCreateRequest(BaseModel):
@@ -12,6 +12,16 @@ class PlanCreateRequest(BaseModel):
     init_longitude: float
     start_date: date
     end_date: date
+
+
+class PlanUpdateRequest(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=100)
+    description: Optional[str] = Field(None, max_length=512)
+    city_to_stay: Optional[str] = Field(None, max_length=20)
+    init_latitude: Optional[float] = None
+    init_longitude: Optional[float] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
 
 
 class PlanResponse(BaseModel):
