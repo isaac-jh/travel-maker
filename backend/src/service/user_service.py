@@ -2,7 +2,7 @@ import bcrypt
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from src.model.user import User
-from src.schema.user import UserSignupRequest
+from src.schema.user import UserSignupRequest, UserLoginRequest, UserLoginResponse
 
 
 def check_nickname_duplicate(db: Session, nickname: str) -> bool:
@@ -40,4 +40,28 @@ def create_user(db: Session, user_data: UserSignupRequest) -> User:
     db.refresh(new_user)
     
     return new_user
+
+
+def login_user(db: Session, login_data: UserLoginRequest) -> UserLoginResponse:
+    user = db.query(User).filter(User.nickname == login_data.nickname).first()
+    
+    if not user:
+        return UserLoginResponse(
+            success=False,
+            message="닉네임 또는 비밀번호가 일치하지 않습니다.",
+            user=None
+        )
+    
+    if not verify_password(login_data.password, user.password):
+        return UserLoginResponse(
+            success=False,
+            message="닉네임 또는 비밀번호가 일치하지 않습니다.",
+            user=None
+        )
+    
+    return UserLoginResponse(
+        success=True,
+        message="로그인 성공",
+        user=user
+    )
 
