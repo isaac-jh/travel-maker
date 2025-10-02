@@ -5,6 +5,7 @@ import logging
 
 from src.util.config import settings
 from src.util.database import get_db, init_db, check_db_connection
+from src.router import user
 
 logging.basicConfig(
     level=logging.INFO if not settings.debug else logging.DEBUG,
@@ -18,6 +19,8 @@ app = FastAPI(
     version="1.0.0",
     debug=settings.debug
 )
+
+app.include_router(user.router, prefix="/api/v1/users", tags=["Users"])
 
 app.add_middleware(
     CORSMiddleware,
