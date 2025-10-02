@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import logging
 
-from src.config import settings
-from src.database import get_db, init_db, check_db_connection
+from src.util.config import settings
+from src.util.database import get_db, init_db, check_db_connection
 
 logging.basicConfig(
     level=logging.INFO if not settings.debug else logging.DEBUG,
