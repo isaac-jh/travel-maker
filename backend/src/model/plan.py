@@ -14,6 +14,7 @@ class Plan(Base):
     init_longitude = Column(Double, nullable=False)
     start_date = Column(Date, nullable=False)
     end_date = Column(Date, nullable=False)
+    created_user_id = Column(BigInteger, nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
 
